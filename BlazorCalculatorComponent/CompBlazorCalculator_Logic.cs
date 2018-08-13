@@ -36,9 +36,6 @@ namespace BlazorCalculatorComponent
 
         protected override void OnAfterRender()
         {
-            DotNetObjectRef dotnethelper = new DotNetObjectRef(this);
-
-            //JsInterop.SaveDotNetObjectRef(dotnethelper);
 
             LocalData.Curr_comp = this;
 
