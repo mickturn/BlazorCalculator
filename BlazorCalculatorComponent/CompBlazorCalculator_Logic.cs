@@ -1,6 +1,7 @@
 ﻿using BlazorCalculatorComponent.Classes;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,21 @@ namespace BlazorCalculatorComponent
 
         }
 
+        protected override void OnAfterRender()
+        {
+            DotNetObjectRef dotnethelper = new DotNetObjectRef(this);
 
+            //JsInterop.SaveDotNetObjectRef(dotnethelper);
+
+            LocalData.Curr_comp = this;
+
+
+            base.OnAfterRender();
+        }
 
         public void AddString(string s)
         {
+
             if (reset == true)
             {
                 reset = false;
@@ -45,7 +57,7 @@ namespace BlazorCalculatorComponent
 
             CurrInput += s;
 
-
+            
         }
 
 
@@ -73,6 +85,7 @@ namespace BlazorCalculatorComponent
 
         public void Cmd_Add_Operator(string Par_Operator)
         {
+            Console.WriteLine("operatoo" + Par_Operator);
             if (!string.IsNullOrEmpty(CurrInput))
             {
                 CurrInput = CurrInput.Replace(".", ",");
@@ -191,12 +204,142 @@ namespace BlazorCalculatorComponent
 
         }
 
+       
+        public void KeyUpFromJS1(int e)
+        {
+
+            ConsoleKey consoleKey = (ConsoleKey)Enum.Parse(typeof(ConsoleKey), e.ToString());
+
+            Console.WriteLine(consoleKey.ToString());
+
+            switch (consoleKey)
+            {
+                case ConsoleKey.D0:
+                    AddString("0");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D1:
+                    AddString("1");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D2:
+                    AddString("2");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D3:
+                    AddString("3");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D4:
+                    AddString("4");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D5:
+                    AddString("5");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D6:
+                    AddString("6");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D7:
+                    AddString("7");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D8:
+                    AddString("8");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.D9:
+                    AddString("9");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad0:
+                    AddString("0");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad1:
+                    AddString("1");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad2:
+                    AddString("2");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad3:
+                    AddString("3");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad4:
+                    AddString("4");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad5:
+                    AddString("5");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad6:
+                    AddString("6");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad7:
+                    AddString("7");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad8:
+                    AddString("8");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.NumPad9:
+                    AddString("9");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Add:
+                    Cmd_Add_Operator("+");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Subtract:
+                    Cmd_Add_Operator("-");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Divide:
+                case ConsoleKey.Oem2:
+                    Cmd_Add_Operator("/");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Multiply:
+                    Cmd_Add_Operator("*");
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Decimal:
+                    Cmd_Add_Dot();
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.OemPeriod:
+                    Cmd_Add_Dot();
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Enter:
+                    Cmd_EQ();
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Escape:
+                    Cmd_Off();
+                    StateHasChanged();
+                    break;
+                case ConsoleKey.Backspace:
+                    Cmd_BackSpace();
+                    StateHasChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
         public void Cmd_KeyUp(UIKeyboardEventArgs e)
         {
           
-            Console.WriteLine(e.Key);
-            
-
             switch (e.Key)
             {
                 case "0":
@@ -208,6 +351,7 @@ namespace BlazorCalculatorComponent
                 case "6":
                 case "7":
                 case "8":
+                case "9":
                     AddString(e.Key);
                     break;
                 case ".":
