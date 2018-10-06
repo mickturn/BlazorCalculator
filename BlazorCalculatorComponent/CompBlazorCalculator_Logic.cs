@@ -82,7 +82,7 @@ namespace BlazorCalculatorComponent
 
         public void Cmd_Add_Operator(string Par_Operator)
         {
-            Console.WriteLine("operatoo" + Par_Operator);
+            
             if (!string.IsNullOrEmpty(CurrInput))
             {
                 CurrInput = CurrInput.Replace(".", ",");
@@ -207,8 +207,7 @@ namespace BlazorCalculatorComponent
 
             ConsoleKey consoleKey = (ConsoleKey)Enum.Parse(typeof(ConsoleKey), e.ToString());
 
-            Console.WriteLine(consoleKey.ToString());
-
+           
             switch (consoleKey)
             {
                 case ConsoleKey.D0:
